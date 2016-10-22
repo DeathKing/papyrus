@@ -1,0 +1,313 @@
+%!TEX program = xelatex
+\documentclass[a4paper,UTF8]{ctexart}
+%-----------------------导言区结开始-------------------------------
+\usepackage{etex}
+\usepackage{fontspec}
+\usepackage{amsmath}              % AMS 符号、环境 
+\usepackage{amssymb}              % AMS 符号
+\usepackage{float}               
+\usepackage{graphicx}             % 用于引入图片
+\usepackage{epstopdf}             % 对 eps 图片的支持
+\usepackage{mathrsfs}             % \mathscr 支持
+\usepackage{stmaryrd}             % 部分符号支持
+\usepackage{color}                % 颜色宏包
+\usepackage{ulem}                 % 用于下划线的编排
+\usepackage{lmodern}              % 使用 Computer Modern 字体
+\usepackage[margin=2cm]{geometry} % 用于修改文稿整体格式
+\usepackage{titlesec}             % 用于为标题指定样式，仅在单个文章整理成册时使用
+\usepackage{tikz}                 % tikz 绘图宏包
+\usepackage[colorlinks]{hyperref} % 用户编排超链接
+\usepackage[noblocks]{authblk}    % 用于编排文章标题下方的作者信息
+\usepackage[export]{adjustbox}
+\usepackage{shortvrb}
+\usepackage{bytefield}            % 用于编排内存布局
+
+%==================================================================
+% TeXpad 请使用词条命令
+\usepackage[texpad]{papyrus}
+%------------------------------------------------------------------
+% 其它软件用户请使用下述命令
+% \usepackage{papyrus}
+%==================================================================
+
+%-----------------------导言区结束-----------------------------------
+
+%-----------------------正　文开始-----------------------------------
+\begin{document}
+
+%==================================================================
+% 封面
+%==================================================================
+\newcommand{\pubno}{000}    % TR编号，按照十进制三位数编写
+% TR 标题
+\newcommand{\pubtitle}{Writeup \LaTeX  模板介绍及使用说明\par Ver0.3 }
+\newcommand{\pubyear}{2016} % 发表年份
+\newcommand{\pubmonth}{10}  % 发表月份
+\newcommand{\pubday}{22}    % 发表日
+
+\begin{titlepage}
+	\centering
+	\par\vspace{5cm}\par
+ 	\includegraphics[width=0.5\textwidth]{hit_logo}
+	\par\vspace{1cm}
+	{\scshape\LARGE Harbin Institute of Technology\par}
+	\vspace{1cm}
+	{\scshape\Large Lilac TechReprot  \textnumero .\pubno\par}
+	\vspace{1.5cm}
+	{\huge\bfseries \pubtitle \par}
+	\vspace{2cm}
+	
+	%=======================================================
+	% 原著请用下面的方式
+	% {\Large\itshape 作者1 \: 作者2 \par}
+	% 译著请用下面的方式
+	{\Large\itshape 作者1 \: 作者2 \quad  \bfseries 著\par}
+	{\Large\itshape 作者1 \: 作者2 \quad \bfseries 译\par}
+	% 如果没有指导老师，请注释掉一下三行
+	\vfill
+	{\bfseries 指导老师}\par
+	{\itshape 指导老师1 \: 指导老师2}
+	%=======================================================
+
+	\vfill
+	{\large \pubyear 年 \pubmonth 月 \pubday 日\par}
+\end{titlepage}
+
+% 文章内部标题默认与封面保持一致 如果有特殊需要可以自行重载
+\title{\pubtitle}
+
+% 作者及单位，推荐用户查看 authblk 宏包手册
+% 作者之间的分隔符
+\renewcommand{\Authsep}{, }
+% 当有多个作者时，下面的命令可以去掉多个作者之间的“and”
+\renewcommand{\Authand}{}
+\renewcommand{\Authands}{}
+
+\author{7HxzZ}
+\affil{哈尔滨工业大学 Lilac战队}
+
+\author{作者2}
+\affil{银河工业大学}
+
+% \authorcr 可以在新一行排版作者
+\author{\authorcr 作者3}
+\affil{宇宙工业大学}
+
+\maketitle
+
+% 摘要部分 如果不需要，则可注释此部分
+\begin{center}
+\parbox{0.9\textwidth}{
+\textbf{摘~~~要}\quad 摘要是对文章的内容不加注释和评论的简短陈述，要求扼要地说明研究工作的目的、研究方法和最终结论等。本模板目前是用一种非常ad-hoc方法实现排版摘要，用户只需要在相关地方输入相关文字即可。\\
+\textbf{关键词}\quad 关键词, 要用, 英文逗号, 隔开\\}
+\end{center}
+
+
+\section{正式的WriteUp没有这一节}
+
+本模板是哈尔滨工业大学 7HxxZ 战队 WriteUp \LaTeX 写作模板的简单简介。
+
+本模板的特色有：
+
+\begin{enumerate}
+	\item 可以单独按照文章编译（\code/ctexart/类），也可以将所有 WriteUp 文章整理成册，按照书籍编译（\code/ctexbook/类）。两者无需改动文章源码。
+	\item 提供了 \code/\code/ 命令，可用于编排单行代码（不完美）。
+	\item 封装了 \code/minted/ 环境，可以简单地排版出含有代码高亮的代码。
+	\item 提供了 \code/quizdesc/ 环境，可用于编排问答模式 CTF 比赛的题目描述。
+\end{enumerate}
+
+本模板托管在 \url{https://github.com/DeathKing/writeup-template} ，用户可以关注该代码仓库，获得本模板的最新更新。当然，本模板还有许多问题，需要大家多提提意见，最好能发一些 Pull Request。
+
+\subsection{关于papyrus宏包}
+
+本模板的核心是 papyrus 宏包，该宏包使用 minted 宏包编排代码，而该宏包与 TeXpad 软件有部分冲突，本样式文件已修复。请用户在使用本模板时，注意第25行左右的代码：
+
+\begin{minted}[firstnumber=25]{latex}
+%==================================================================
+% TeXpad 请使用词条命令
+\usepackage[texpad]{papyrus}
+%------------------------------------------------------------------
+% 其它软件用户请使用下述命令
+% \usepackage{papyrus}
+%==================================================================
+\end{minted}
+
+请根据自己使用的编辑器选择合适的命令引入 papyrus 样式包！
+
+% ---------------------------------
+% 第一节
+% ---------------------------------
+\section{简述}
+
+第一节通常用来简要描述题目的要求，可以用\verb|\begin{quizdesc}...\end{quizdesc}|环境来描述：\\
+
+
+\begin{quizdesc}[label=Crypto100 Simple]
+Become admin!
+
+http://52.69.244.164:51913
+simple-01018f60e497b8180d6c92237e2b3a67.rb
+\end{quizdesc}
+
+对应的代码是：
+
+\begin{minted}{latex}
+\begin{quizdesc}[label=Crypto100 Simple]
+Become admin!
+
+http://52.69.244.164:51913
+simple-01018f60e497b8180d6c92237e2b3a67.rb
+\end{quizdesc}
+\end{minted}
+
+\section{代码编排}
+
+行内代码请使用\code/\code/\slash \code/inline code/\slash 来编排，例如，代码\code/while (true) { printf("Hello, World!\n"); } /的编排代码如下：
+
+\begin{minted}{latex}
+\code/while (true) { printf("Hello, World!\n"); } /
+\end{minted}
+
+由于编排行内代码存在对特殊符号支持不是很好，所以不推荐用单行代码来编排 Flag 。多行代码请使用\code/minted/环境来编排：
+
+\begin{minted}{ruby}
+#!/usr/bin/env ruby
+
+class SampleCode
+  def initialize
+  end
+end
+\end{minted}
+
+对应的代码是：
+
+\begin{verbatim}
+\begin{minted}{ruby}
+#!/usr/bin/env ruby
+
+class SampleCode
+  def initialize
+  end
+end
+\end{minted}
+\end{verbatim}
+
+minted环境对于Tab缩进支持不是很好，推荐使用空格进行缩进。对于大部分代码（特别是Python代码），由于其前面自带的Tab缩进，推荐为\code/minted/环境添加\code/[autogobble]/选项来去除不必要的缩进，或者使用Sublime Text Editor等具有列编辑功能的编辑器快速删除掉缩进。
+
+关于\code/minted/环境的使用方法，请参考：\url{ftp://ftp.dante.de/tex-archive/macros/latex/contrib/minted/minted.pdf}。
+
+\subsection{关于代码高亮 - Pygments}
+
+\code/minted/ 环境是靠一个外部工具 Pygments 实现代码高亮的，因此需要先安装并设置 Pygments 。这里提供几个有用的连接：
+
+\begin{enumerate}
+	\item 如何安装（特别是 Pygments ）：\url{http://tex.stackexchange.com/questions/108661/how-to-use-minted-under-miktex-and-windows-7}
+	\item 支持的语言：\url{http://pygments.org/languages/}
+	\item 支持的词法器（这个网页中的Short names就应该是你的语言名称）：\url{http://pygments.org/docs/lexers/}
+\end{enumerate}
+
+\section{图片的编排}
+
+插图是科技论文和 WriteUp 写作的硬需求，很多同学反映用 \LaTeX 插图非常麻烦。其实不然，利用 \code/\includegraphics{}/ 命令，就可以很轻松地插入一张图片。通常来说，我们把这个图片放入一个\code/figure/ 环境下，并使用一个 \code/\caption{}/ 命令为图标标注名称。
+
+\begin{figure}[hbt!]
+  \includegraphics[width=0.80\textwidth,center]{hisp2}
+  \caption{Hisp语言}\label{hisp}
+\end{figure}
+
+图 \ref{hisp} 是Hisp语言的Logo。它对应的代码如下：
+
+\begin{minted}{latex}
+\begin{figure}[hbt!]
+  \includegraphics[width=0.80\textwidth,center]{hisp2}
+  \caption{Hisp语言}\label{hisp}
+\end{figure}
+\end{minted}
+
+这段代码的解释如下：
+
+\begin{enumerate}
+	\item 首先，我们启用了一个 \code/figure/ 环境，图形（figure）环境有一个可选参数项允许用户来指示图形有可能被放置的位置。关于参数的具体意义，请参考\url{http://www.ctex.org/documents/latex/graphics/node64.html}。
+	\item 然后，\code/\includegraphics{}/ 命令用于插入一组图片，不用书写图片的扩展名，并且要将图片与 \code/.tex/ 文件存放在同一文件夹。（绝对路径、设定了 \code/\includegraphics{}/ 命令搜索的文件夹的情况下除外。）\code/\includegraphics{}/ 命令还可以接收一组参数，本例中 \code/width=0.80\textwidth/ 就告知 \LaTeX ，将图片按宽度缩放为文本行宽的0.8倍大小。而 \code/center/ 是由 \code{adjustbox} 宏包提供的选项参数，用于将图片居中。
+	\item 特别地，可以用\code/\label{}/命令来标记图表或公示，利用\code/\ref{}/命令来引用它们对应的编号。
+
+\end{enumerate}
+
+\section{bytefield包简单使用说明}
+
+考虑到渗透和逆向题目的WriteUp中经常需要编排内存布局，本模板的Ver0.2版本引入了\code/bytefield/包，可用于描绘内存布局。图 \ref{fig:hacked} 就是一个使用 \code/bytefield/包绘制的内存布局图，其代码如代码片段 \ref{lst:bf} 所示。
+
+
+\begin{figure}[!htb]
+\begin{center}
+\begin{bytefield}{24}
+	\wordbox{2}{\code/system()/}\\
+	\wordbox{2}{\Verb|"/bin/sh"|}\\
+	\wordbox{2}{\code/"pop rdi; ret"/}\\
+	\wordbox{2}{EBP}\\
+	\wordbox{2}{Canary}\\
+	\begin{rightwordgroup}{0x200}
+		\wordbox{10}{Buffer}
+	\end{rightwordgroup}
+\end{bytefield}
+\end{center}
+\caption{攻击后的栈帧布局}\label{fig:hacked}
+\end{figure}
+
+\begin{listing}[!htb]
+\begin{minted}{latex}
+\begin{figure}[!htb]
+\begin{center}
+\begin{bytefield}{24}
+    \wordbox{2}{\code/system()/}\\
+    \wordbox{2}{\Verb|"/bin/sh"|}\\
+    \wordbox{2}{\code/"pop rdi; ret"/}\\
+    \wordbox{2}{EBP}\\
+    \wordbox{2}{Canary}\\
+    \begin{rightwordgroup}{0x200}
+        \wordbox{10}{Buffer}
+    \end{rightwordgroup}
+\end{bytefield}
+\end{center}
+\caption{攻击后的栈帧布局}\label{fig:hacked}
+\end{figure}
+\end{minted}
+\caption{\code/bytefiled/包使用代码示意}\label{lst:bf}
+\end{listing}
+
+\section{其它宏包使用简述}
+
+\subsection{\texttt{ulem}宏包使用方法}
+
+\texttt{ulem} 宏包主要用于编排下划线、删除线，代码及对应的效果如表\ref{tbl:ulem}所示：
+
+\begin{table}[!htb]
+\caption{\code/ulem/包编排效果}\label{tbl:ulem}
+\begin{center}
+\begin{tabular}{l@{\quad}l}\hline\noalign{\vskip2pt}
+   \verb|\uline{important}|  & underlined text like \uline{important}\\[1pt]
+   \verb|\uuline{urgent}|    & double-underlined text like  \uuline{urgent}\\[1pt]
+   \verb|\uwave{boat}|       & wavy underline like {\let\ULleaders\cleaders\uwave{boat}}\\[1pt]
+   \verb|\sout{wrong}|       & line struck through word like \sout{wrong}\\[1pt]
+   \verb|\xout{removed}|     & marked over like \xout{removed} \\[1pt]
+   \verb|\dashuline{dashing}|& dashed underline like \dashuline{dashing}\\[1pt]
+   \verb|\dotuline{dotty}|   & dotted underline like \dotuline{dotty}\\[3pt]\hline
+\end{tabular}
+\end{center}	
+\end{table}
+
+
+\small
+\begin{thebibliography}{99}
+
+\bibitem{wiki_aes} Advanced Encryption Standard, \url{https://en.wikipedia.org/wiki/Advanced_Encryption_Standard}
+\bibitem{wiki_bcmo} Block cipher mode of operation, \url{https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation}
+\bibitem{sch07} Schneier B. Applied cryptography: protocols, algorithms, and source code in C[M]. john wiley \& sons, 2007.
+\end{thebibliography}
+
+%------------------------------------------------------------------------------------------------------------------------------
+%OK: 正文结束
+%------------------------------------------------------------------------------------------------------------------------------
+
+
+\end{document}

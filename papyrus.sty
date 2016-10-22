@@ -1,0 +1,133 @@
+\ProvidesPackage{papyrus}
+\RequirePackage{bytefield}
+\RequirePackage{graphicx}
+\RequirePackage{etoolbox}
+\RequirePackage{caption}
+\RequirePackage{amsmath} 
+\RequirePackage{amssymb}
+
+\newif\if@texpad\@texpadfalse
+\DeclareOption{texpad}{\@texpadtrue}
+\ProcessOptions\relax
+\if@texpad 
+  \usepackage[newfloat=true,cache=false,outputdir=.texpadtmp,section]{minted}
+\else
+  \RequirePackage[newfloat=true,cache=false,section]{minted}
+\fi
+
+% minted 全局样式
+\setminted{linenos,
+           breaklines,
+           breakanywhere,
+           xleftmargin=.08\textwidth,
+           xrightmargin=.08\textwidth,
+           framerule=0.8pt,
+           frame=lines,
+           framesep=2mm}
+
+% 图片按章节编号 图1-1
+\renewcommand{\figurename}{{\bfseries 图 }}
+\renewcommand{\tablename}{{\bfseries 表 }}
+
+\renewcommand{\thefigure}{\arabic{section}.\arabic{figure}}
+\renewcommand{\thetable}{\arabic{section}.\arabic{table}}
+
+% 将 listing 显示为代码片段
+\renewcommand{\listingname}{{\bfseries 代码片段}}
+\renewcommand{\fnum@listing}{\listingname ~\thelisting}
+
+\renewcommand*{\maketitle}{
+	\begin{center}
+		\setlength{\baselineskip}{22pt}
+		{\huge\bfseries\@title\\\vspace{.5em}}
+		{\itshape\@author}
+		\\[20pt]	
+	\end{center}
+}
+
+% 小节标题左对齐
+\titleformat{\section}[hang]{\bfseries\fontsize{16pt}{0pt}\selectfont}{\thesection}{.5em}{}{}
+
+% 减少代码的行间距
+% ref: http://tex.stackexchange.com/questions/35546/minted-setstretch-and-font-size
+\AtBeginEnvironment{minted}{\linespread{1}}
+
+% 用户格式化行内代码的命令
+%\newcommand{\code}[1]{\texttt{#1}}
+\newmintinline[code]{text}{breaklines, mathescape}
+
+% used to format quiz description
+\DefineVerbatimEnvironment{quizdesc}{Verbatim}
+		{frame=single,
+		 xleftmargin=.1\textwidth,
+  		 xrightmargin=.1\textwidth}
+
+% 5pt break for each paragraph  		 
+\setlength{\parskip}{5pt}
+
+\long\def\symbolfootnote[#1]#2{\begingroup%
+\def\thefootnote{\fnsymbol{footnote}}\footnote[#1]{#2}\endgroup}
+
+\makeatletter
+\newenvironment{papers}{\renewcommand{\documentclass}[2][]{}%
+
+	\newcommand{\@@title}{}%
+	\newcommand{\@@subtitle}{}%
+	\newcommand{\@@author}{}%
+
+	\renewcommand{\usepackage}[2][]{}%
+	\renewenvironment{document}{\begingroup}{\endgroup}%
+
+	\renewcommand{\title}[1]{\renewcommand{\@title}{##1}\begingroup%
+		\renewcommand{\thanks}[1]{}\protected@xdef\@title{##1}
+		\endgroup}
+	\renewcommand{\subtitle}[1]{\renewcommand{\@@subtitle}{##1}}%
+	\renewcommand{\author}[1]{\renewcommand{\@author}{##1}}
+	\renewcommand{\thanks}[1]{\symbolfootnote[1]{##1}}
+	\renewcommand{\maketitle}{
+	
+		\begin{center}
+			\setlength{\baselineskip}{16pt}
+			{\Large\bfseries\@title\\}			{\ifthenelse{\equal{\@@subtitle}{}}{
+	    		%empty subtitle
+			}{
+				%not empty subtitle
+				\vspace{.3em}
+				\Large\@@subtitle\\
+			}}
+			{\vspace{1.2em}\normalsize\@author}
+%			\\[20pt]
+
+		\end{center}
+		\markboth{\@@title}{\@author}%
+	  	\addcontentsline{toc}{chapter}{\@title\\\kaishu\@author}%
+	  	\addtocontents{toc}{\protect\setcounter{tocdepth}{0}}
+        \renewcommand\thesection{\arabic{section}}	        \setcounter{section}{0}
+	  	\setcounter{footnote}{1}
+	  	\ignorespacesafterend}
+	
+%	\renewcommand{\maketitle}{
+%		\thispagestyle{empty}
+%		%\vspace*{1\baselineskip}
+%		\begin{center}\sf
+%			\LARGE\@title%
+%			\ifthenelse{\equal{\@@subtitle}{}}{
+%	    		%emtpy subtitle
+%			}{
+%				%not empty subtitle
+%				\bigskip
+%				\Large\@@subtitle
+%			}
+%			\bigskip
+%			%\large\@author%
+%		\end{center}%
+%	
+%		\markboth{\@@title}{\@author}%
+%	  	\addcontentsline{toc}{chapter}{\@title\\\MakeUppercase{\@author}}%
+%	  	\addtocontents{toc}{\protect\setcounter{tocdepth}{0}}
+%	  	\setcounter{footnote}{1}\noindent%
+%	  	\ignorespacesafterend}
+}{
+}
+
+\makeatother
